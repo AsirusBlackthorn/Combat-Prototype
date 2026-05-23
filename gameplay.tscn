@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cf5ouhvu3tcvg"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kbk8u"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_n4psk"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ej4tk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_oe8ih"]
+size = Vector3(20, 0.5, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xuee5"]
+size = Vector3(0.5, 5, 20)
+
+[node name="Gameplay" type="Node3D" unique_id=2049038793]
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=856654349]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="BodyCapsule" type="MeshInstance3D" parent="Player" unique_id=127544111]
+mesh = SubResource("CapsuleMesh_kbk8u")
+
+[node name="HeadPrism" type="MeshInstance3D" parent="Player/BodyCapsule" unique_id=706293407]
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106855e-15, -1, 1, -4.371139e-08, -4.371139e-08, -0.55703586, 0.868742, 0)
+mesh = SubResource("PrismMesh_n4psk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1993518378]
+shape = SubResource("CapsuleShape3D_ej4tk")
+
+[node name="LevelBoundaries" type="Node3D" parent="." unique_id=1486264260]
+
+[node name="Floor" type="MeshInstance3D" parent="LevelBoundaries" unique_id=1000710395]
+mesh = SubResource("BoxMesh_oe8ih")
+
+[node name="Wall" type="MeshInstance3D" parent="LevelBoundaries" unique_id=358371026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 0)
+mesh = SubResource("BoxMesh_xuee5")
+
+[node name="CameraArm" type="SpringArm3D" parent="." unique_id=661305218]
+
+[node name="Camera3D" type="Camera3D" parent="CameraArm" unique_id=2026131005]
+
+[node name="StateMachine" type="Node" parent="." unique_id=1735072675]
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=1995687661]
+
+[node name="MoveState" type="Node" parent="StateMachine" unique_id=1411210812]
+
+[node name="RunState" type="Node" parent="StateMachine/MoveState" unique_id=197472576]
+
+[node name="JumpState" type="Node" parent="StateMachine" unique_id=2018297578]
+
+[node name="DodgeState" type="Node" parent="StateMachine" unique_id=376129]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2120226800]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 6, 0)
