@@ -1,6 +1,6 @@
 63f7b34db8d8cdea90c76aacccf841ec
 ::res://::1779533085
-gameplay.tscn::PackedScene::5186603073026205168::1779536424::0::1::::<><><>0<>0<><>::
+gameplay.tscn::PackedScene::5186603073026205168::1779546248::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D::7402056415910395204::1779533086::1779533102::1::::<><><>0<>0<>35c819d7b564da813dd2aaa5345675c6<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 ::res://addons/::1779536071
 ::res://addons/gamedev_assistant/::1779536081
@@ -114,3 +114,9 @@ gamedev_assistant_dock.gd::GDScript::8425978837083279553::1779536086::0::1::::<>
 screen_base.gd::GDScript::5648679408139400501::1779536086::0::1::::GDAScreenBase<>Control<><>0<>1<><>::
 settings_button.gd::GDScript::7668047276004320147::1779536086::0::1::::<>Button<><>0<>1<><>::
 settings_screen.gd::GDScript::2509677082686453262::1779536086::0::1::::<>GDAScreenBase<><>0<>1<><>::
+::res://addons/godot-git-plugin/::1779539865
+git_plugin.gdextension::GDExtension::2731195030370573583::1779539866::0::1::::<><><>0<>0<><>::
+THIRDPARTY.md::TextFile::-1::1779539868::0::1::::<><><>0<>0<><>::
+::res://addons/godot-git-plugin/linux/::1779539866
+::res://addons/godot-git-plugin/macos/::1779539866
+::res://addons/godot-git-plugin/windows/::1779539865
