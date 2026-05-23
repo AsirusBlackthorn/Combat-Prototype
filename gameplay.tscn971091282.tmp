@@ -24,21 +24,21 @@ data = PackedVector3Array(-0.25, 2.5, 10, 0.25, 2.5, 10, -0.25, -2.5, 10, 0.25, 
 [node name="Gameplay" type="Node3D" unique_id=2049038793]
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=856654349]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4984775, 0)
 script = ExtResource("1_n4psk")
+speed = null
 
 [node name="BodyCapsule" type="MeshInstance3D" parent="Player" unique_id=127544111]
 mesh = SubResource("CapsuleMesh_kbk8u")
 
 [node name="HeadPrism" type="MeshInstance3D" parent="Player/BodyCapsule" unique_id=706293407]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.8831296, -0.5305817)
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106855e-15, -1, 1, -4.371139e-08, -4.371139e-08, -0.55703586, 0.868742, 0)
 mesh = SubResource("PrismMesh_n4psk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1993518378]
 shape = SubResource("CapsuleShape3D_ej4tk")
 
 [node name="LevelBoundaries" type="Node3D" parent="." unique_id=1486264260]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="Floor" type="MeshInstance3D" parent="LevelBoundaries" unique_id=1000710395]
 mesh = SubResource("BoxMesh_oe8ih")
@@ -57,6 +57,10 @@ mesh = SubResource("BoxMesh_xuee5")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBoundaries/Wall/StaticBody3D" unique_id=2027055710]
 shape = SubResource("ConcavePolygonShape3D_oe8ih")
 
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2026131005]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("2_ej4tk")
+
 [node name="StateMachine" type="Node" parent="." unique_id=1735072675]
 
 [node name="IdleState" type="Node" parent="StateMachine" unique_id=1995687661]
@@ -71,6 +75,3 @@ shape = SubResource("ConcavePolygonShape3D_oe8ih")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2120226800]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 6, 0)
-
-[node name="Camera3D" type="Camera3D" parent="." unique_id=252010629]
-script = ExtResource("2_ej4tk")
