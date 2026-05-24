@@ -15,7 +15,7 @@ func _ready():
 	make_current()
 	
 	if not target:
-		target = get_node("../Player")
+		target = get_node("..Character/Player")
 	
 	# Start behind the player at a slight downward angle
 	pitch = deg_to_rad(-15.0)

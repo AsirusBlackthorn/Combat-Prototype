@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://cf5ouhvu3tcvg"]
 
 [ext_resource type="Script" uid="uid://bm225giiwbcmw" path="res://Player.gd" id="1_n4psk"]
+[ext_resource type="Script" uid="uid://c86oxxrakdbhl" path="res://Character.gd" id="1_xuee5"]
 [ext_resource type="Script" uid="uid://f0vffa1autxp" path="res://CameraController.gd" id="2_ej4tk"]
+[ext_resource type="Script" uid="uid://l07g7dm0o6ag" path="res://StateMachine.gd" id="3_smepj"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kbk8u"]
 
@@ -23,54 +25,108 @@ data = PackedVector3Array(-0.25, 2.5, 10, 0.25, 2.5, 10, -0.25, -2.5, 10, 0.25, 
 
 [node name="Gameplay" type="Node3D" unique_id=2049038793]
 
-[node name="Player" type="CharacterBody3D" parent="." unique_id=856654349]
+[node name="Character" type="Node3D" parent="." unique_id=191243375]
+script = ExtResource("1_xuee5")
+
+[node name="Player" type="CharacterBody3D" parent="Character" unique_id=856654349]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 script = ExtResource("1_n4psk")
 
-[node name="BodyCapsule" type="MeshInstance3D" parent="Player" unique_id=127544111]
+[node name="BodyCapsule" type="MeshInstance3D" parent="Character/Player" unique_id=127544111]
 mesh = SubResource("CapsuleMesh_kbk8u")
 
-[node name="HeadPrism" type="MeshInstance3D" parent="Player/BodyCapsule" unique_id=706293407]
+[node name="HeadPrism" type="MeshInstance3D" parent="Character/Player/BodyCapsule" unique_id=706293407]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.8831296, -0.5305817)
 mesh = SubResource("PrismMesh_n4psk")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1993518378]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Player" unique_id=1993518378]
 shape = SubResource("CapsuleShape3D_ej4tk")
 
-[node name="LevelBoundaries" type="Node3D" parent="." unique_id=1486264260]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+[node name="Enemy" type="CharacterBody3D" parent="Character" unique_id=1064584460]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, -5)
 
-[node name="Floor" type="MeshInstance3D" parent="LevelBoundaries" unique_id=1000710395]
+[node name="BodyCapsule" type="MeshInstance3D" parent="Character/Enemy" unique_id=821776615]
+mesh = SubResource("CapsuleMesh_kbk8u")
+
+[node name="HeadPrism" type="MeshInstance3D" parent="Character/Enemy/BodyCapsule" unique_id=522101109]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1, -0.531)
+mesh = SubResource("PrismMesh_n4psk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Enemy" unique_id=320121704]
+shape = SubResource("CapsuleShape3D_ej4tk")
+
+[node name="LevelBoundary" type="Node3D" parent="." unique_id=1486264260]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -0.25, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="LevelBoundary" unique_id=1000710395]
 mesh = SubResource("BoxMesh_oe8ih")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="LevelBoundaries/Floor" unique_id=636409351]
+[node name="StaticBody3D" type="StaticBody3D" parent="LevelBoundary/Floor" unique_id=636409351]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBoundaries/Floor/StaticBody3D" unique_id=1473520039]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBoundary/Floor/StaticBody3D" unique_id=1473520039]
 shape = SubResource("ConcavePolygonShape3D_ej4tk")
 
-[node name="Wall" type="MeshInstance3D" parent="LevelBoundaries" unique_id=358371026]
+[node name="Wall" type="MeshInstance3D" parent="LevelBoundary" unique_id=358371026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 0)
 mesh = SubResource("BoxMesh_xuee5")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="LevelBoundaries/Wall" unique_id=1449578271]
+[node name="StaticBody3D" type="StaticBody3D" parent="LevelBoundary/Wall" unique_id=1449578271]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBoundaries/Wall/StaticBody3D" unique_id=2027055710]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBoundary/Wall/StaticBody3D" unique_id=2027055710]
 shape = SubResource("ConcavePolygonShape3D_oe8ih")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1735072675]
+script = ExtResource("3_smepj")
 
-[node name="IdleState" type="Node" parent="StateMachine" unique_id=1995687661]
+[node name="MovementStates" type="Node" parent="StateMachine" unique_id=350072892]
 
-[node name="MoveState" type="Node" parent="StateMachine" unique_id=1411210812]
+[node name="IdleState" type="Node" parent="StateMachine/MovementStates" unique_id=1995687661]
 
-[node name="RunState" type="Node" parent="StateMachine/MoveState" unique_id=197472576]
+[node name="MoveState" type="Node" parent="StateMachine/MovementStates" unique_id=1411210812]
 
-[node name="JumpState" type="Node" parent="StateMachine" unique_id=2018297578]
+[node name="RunState" type="Node" parent="StateMachine/MovementStates/MoveState" unique_id=197472576]
 
-[node name="DodgeState" type="Node" parent="StateMachine" unique_id=376129]
+[node name="DodgeState" type="Node" parent="StateMachine/MovementStates" unique_id=376129]
+
+[node name="JumpState" type="Node" parent="StateMachine/MovementStates" unique_id=2018297578]
+
+[node name="ContactStates" type="Node" parent="StateMachine" unique_id=796313936]
+
+[node name="PushState" type="Node" parent="StateMachine/ContactStates" unique_id=280651588]
+
+[node name="ReactionState" type="Node" parent="StateMachine/ContactStates" unique_id=1011645285]
+
+[node name="StaggerState" type="Node" parent="StateMachine/ContactStates/ReactionState" unique_id=1794997039]
+
+[node name="KnockdownState" type="Node" parent="StateMachine/ContactStates" unique_id=185777413]
+
+[node name="WakeupState" type="Node" parent="StateMachine/ContactStates/KnockdownState" unique_id=880192721]
+
+[node name="AiBehaviourStates" type="Node" parent="StateMachine" unique_id=1244581435]
+
+[node name="PassiveState" type="Node" parent="StateMachine/AiBehaviourStates" unique_id=807988345]
+
+[node name="AlertState" type="Node" parent="StateMachine/AiBehaviourStates" unique_id=631120481]
+
+[node name="HostileState" type="Node" parent="StateMachine/AiBehaviourStates" unique_id=1686417288]
+
+[node name="PursuitState" type="Node" parent="StateMachine/AiBehaviourStates" unique_id=496573810]
+
+[node name="ActionStates" type="Node" parent="StateMachine" unique_id=35292992]
+
+[node name="PrimaryState" type="Node" parent="StateMachine/ActionStates" unique_id=399539206]
+
+[node name="SecondaryState" type="Node" parent="StateMachine/ActionStates" unique_id=961061325]
+
+[node name="InteractionState" type="Node" parent="StateMachine/ActionStates" unique_id=962861885]
+
+[node name="UtilityState" type="Node" parent="StateMachine/ActionStates" unique_id=1336752714]
+
+[node name="EssenceState" type="Node" parent="StateMachine/ActionStates" unique_id=1994001805]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2120226800]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 6, 0)
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=252010629]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=252010629 node_paths=PackedStringArray("target")]
 script = ExtResource("2_ej4tk")
+target = NodePath("../Character/Player")
