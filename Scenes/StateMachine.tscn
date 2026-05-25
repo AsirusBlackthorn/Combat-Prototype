@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://dylt8strx02hy"]
+
+[ext_resource type="Script" uid="uid://l07g7dm0o6ag" path="res://states/StateMachine.gd" id="1_mwdj8"]
+[ext_resource type="Script" uid="uid://c52featnf8swo" path="res://states/Movement/MovementStateMachine.gd" id="2_2nm0v"]
+[ext_resource type="Script" uid="uid://bwh71kby7rsfn" path="res://states/Movement/IdleState.gd" id="3_sh0rg"]
+[ext_resource type="Script" uid="uid://n3fsu3ck8qj5" path="res://states/Movement/MoveState.gd" id="4_dsebq"]
+[ext_resource type="Script" uid="uid://da6j12q0vjewh" path="res://states/Movement/SprintState.gd" id="5_2s0qg"]
+[ext_resource type="Script" uid="uid://dbt2pn1pj8soa" path="res://states/Movement/DodgeState.gd" id="6_mbx1x"]
+[ext_resource type="Script" uid="uid://dbdywdjgcuk1" path="res://states/Movement/JumpState.gd" id="7_jpbrv"]
+
+[node name="StateMachine" type="Node" unique_id=807433644]
+script = ExtResource("1_mwdj8")
+
+[node name="MovementStates" type="Node" parent="." unique_id=674099984]
+script = ExtResource("2_2nm0v")
+
+[node name="IdleState" type="Node" parent="MovementStates" unique_id=956796158]
+script = ExtResource("3_sh0rg")
+
+[node name="MoveState" type="Node" parent="MovementStates" unique_id=2079147211]
+script = ExtResource("4_dsebq")
+
+[node name="RunState" type="Node" parent="MovementStates/MoveState" unique_id=858352807]
+
+[node name="SprintState" type="Node" parent="MovementStates/MoveState" unique_id=1449513863]
+script = ExtResource("5_2s0qg")
+
+[node name="DodgeState" type="Node" parent="MovementStates" unique_id=1875116381]
+script = ExtResource("6_mbx1x")
+
+[node name="JumpState" type="Node" parent="MovementStates" unique_id=8700123]
+script = ExtResource("7_jpbrv")
+
+[node name="ContactStates" type="Node" parent="." unique_id=296657321]
+
+[node name="PushState" type="Node" parent="ContactStates" unique_id=1641422310]
+
+[node name="ReactionState" type="Node" parent="ContactStates" unique_id=1033397303]
+
+[node name="StaggerState" type="Node" parent="ContactStates/ReactionState" unique_id=71109265]
+
+[node name="KnockdownState" type="Node" parent="ContactStates" unique_id=1504379597]
+
+[node name="WakeupState" type="Node" parent="ContactStates/KnockdownState" unique_id=110209668]
+
+[node name="AiBehaviourStates" type="Node" parent="." unique_id=949910397]
+
+[node name="PassiveState" type="Node" parent="AiBehaviourStates" unique_id=1126616121]
+
+[node name="AlertState" type="Node" parent="AiBehaviourStates" unique_id=1032434564]
+
+[node name="HostileState" type="Node" parent="AiBehaviourStates" unique_id=609051606]
+
+[node name="PursuitState" type="Node" parent="AiBehaviourStates" unique_id=1247141325]
+
+[node name="ActionStates" type="Node" parent="." unique_id=1995454102]
+
+[node name="PrimaryState" type="Node" parent="ActionStates" unique_id=1759469908]
+
+[node name="SecondaryState" type="Node" parent="ActionStates" unique_id=47671553]
+
+[node name="InteractionState" type="Node" parent="ActionStates" unique_id=1888770217]
+
+[node name="UtilityState" type="Node" parent="ActionStates" unique_id=1155971160]
+
+[node name="EssenceState" type="Node" parent="." unique_id=675842678]
+
+[node name="ChargeState1" type="Node" parent="EssenceState" unique_id=105280220]
+
+[node name="ChargeState2" type="Node" parent="EssenceState" unique_id=110559126]
+
+[node name="ChargeState3" type="Node" parent="EssenceState" unique_id=122594995]
+
+[node name="ChargeState4" type="Node" parent="EssenceState" unique_id=1119108027]
+
+[node name="ChargeState0" type="Node" parent="EssenceState" unique_id=510908476]
