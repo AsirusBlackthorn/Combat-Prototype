@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BoundaryConfig" format=3 uid="uid://cqysjl06atugp"]
+
+[ext_resource type="Script" uid="uid://dduex0fk3fdx1" path="res://resources/BoundaryConfig.gd" id="1_b6w7o"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_b6w7o"]
+size = Vector3(20, 0.5, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b6w7o"]
+size = Vector3(20, 0.5, 20)
+
+[resource]
+script = ExtResource("1_b6w7o")
+meshes = Array[Mesh]([SubResource("BoxMesh_b6w7o")])
+shapes = Array[Shape3D]([SubResource("BoxShape3D_b6w7o")])
+metadata/_custom_type_script = "uid://dduex0fk3fdx1"

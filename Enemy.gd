@@ -17,7 +17,6 @@ func _process(delta: float) -> void:
 #Consider logic required to transition into AlertState:
 #Perhaps if the enemy loses line of sight for a certain duration, or they receive somemother stimulus than their awareness field being entered.
 #Consider raycasting in a cone in front, and a small sphere, capsule or cyclinder to cover their blind spots
-
-#If there are many enemies in a scene, does the enemy node require duplication each time?
-#Or, would it be possible to create many instances of the same node?
-#Is it possible to utilise data driven design to create many enemies with unique stats, models and behaviour variable variations without duplicating the enemy node at all?
+#Create logic for permadeath or respawns
+#Respawn after imteracting with checkpoint, or spawn continuously?
+#Special spawn behaviour eg. within instances of Friend.tscn, or even other instances of enemy.tscn

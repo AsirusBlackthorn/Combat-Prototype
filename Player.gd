@@ -1,4 +1,4 @@
-# Edit file: res://Player.gd
+#Edit to inherit logic from base class "character.gd"
 extends CharacterBody3D
 
 @export var speed: float = 5.0

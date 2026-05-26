@@ -1,3 +1,6 @@
 [gd_scene format=3 uid="uid://y6lnovhxtgbn"]
 
+[ext_resource type="Script" uid="uid://ce81h7jayfqu0" path="res://LevelBoundary.gd" id="1_623ov"]
+
 [node name="LevelBoundary" type="Node3D" unique_id=1757720950]
+script = ExtResource("1_623ov")

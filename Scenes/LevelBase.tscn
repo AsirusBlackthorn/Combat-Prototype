@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://damh3ken3cwy1"]
+
+[ext_resource type="PackedScene" uid="uid://y6lnovhxtgbn" path="res://Scenes/LevelBoundary.tscn" id="1_wrhoe"]
+
+[node name="LevelBase" type="Node3D" unique_id=1367429581]
+
+[node name="LevelBoundary" parent="." unique_id=1757720950 instance=ExtResource("1_wrhoe")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1426577254]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10, 0)

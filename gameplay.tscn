@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://cf5ouhvu3tcvg"]
 
 [ext_resource type="Script" uid="uid://bm225giiwbcmw" path="res://Player.gd" id="1_n4psk"]
-[ext_resource type="Script" uid="uid://c86oxxrakdbhl" path="res://Character.gd" id="1_xuee5"]
-[ext_resource type="Script" uid="uid://f0vffa1autxp" path="res://CameraController.gd" id="2_ej4tk"]
 [ext_resource type="Script" uid="uid://b8pyqojh5otak" path="res://Enemy.gd" id="3_2ihbs"]
 [ext_resource type="PackedScene" uid="uid://dylt8strx02hy" path="res://Scenes/StateMachine.tscn" id="4_smepj"]
+[ext_resource type="PackedScene" uid="uid://y6lnovhxtgbn" path="res://Scenes/LevelBoundary.tscn" id="5_cbffv"]
+[ext_resource type="PackedScene" uid="uid://2ky4mvf0frvi" path="res://Scenes/Camera.tscn" id="5_smepj"]
+[ext_resource type="Resource" uid="uid://cqysjl06atugp" path="res://DemoFloor.tres" id="6_cbffv"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kbk8u"]
 
@@ -15,19 +16,15 @@
 [sub_resource type="BoxMesh" id="BoxMesh_oe8ih"]
 size = Vector3(20, 0.5, 20)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ej4tk"]
-data = PackedVector3Array(-10, 0.25, 10, 10, 0.25, 10, -10, -0.25, 10, 10, 0.25, 10, 10, -0.25, 10, -10, -0.25, 10, 10, 0.25, -10, -10, 0.25, -10, 10, -0.25, -10, -10, 0.25, -10, -10, -0.25, -10, 10, -0.25, -10, 10, 0.25, 10, 10, 0.25, -10, 10, -0.25, 10, 10, 0.25, -10, 10, -0.25, -10, 10, -0.25, 10, -10, 0.25, -10, -10, 0.25, 10, -10, -0.25, -10, -10, 0.25, 10, -10, -0.25, 10, -10, -0.25, -10, 10, 0.25, 10, -10, 0.25, 10, 10, 0.25, -10, -10, 0.25, 10, -10, 0.25, -10, 10, 0.25, -10, -10, -0.25, 10, 10, -0.25, 10, -10, -0.25, -10, 10, -0.25, 10, 10, -0.25, -10, -10, -0.25, -10)
-
 [sub_resource type="BoxMesh" id="BoxMesh_xuee5"]
 size = Vector3(0.5, 5, 20)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_oe8ih"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_xuee5"]
 data = PackedVector3Array(-0.25, 2.5, 10, 0.25, 2.5, 10, -0.25, -2.5, 10, 0.25, 2.5, 10, 0.25, -2.5, 10, -0.25, -2.5, 10, 0.25, 2.5, -10, -0.25, 2.5, -10, 0.25, -2.5, -10, -0.25, 2.5, -10, -0.25, -2.5, -10, 0.25, -2.5, -10, 0.25, 2.5, 10, 0.25, 2.5, -10, 0.25, -2.5, 10, 0.25, 2.5, -10, 0.25, -2.5, -10, 0.25, -2.5, 10, -0.25, 2.5, -10, -0.25, 2.5, 10, -0.25, -2.5, -10, -0.25, 2.5, 10, -0.25, -2.5, 10, -0.25, -2.5, -10, 0.25, 2.5, 10, -0.25, 2.5, 10, 0.25, 2.5, -10, -0.25, 2.5, 10, -0.25, 2.5, -10, 0.25, 2.5, -10, -0.25, -2.5, 10, 0.25, -2.5, 10, -0.25, -2.5, -10, 0.25, -2.5, 10, 0.25, -2.5, -10, -0.25, -2.5, -10)
 
 [node name="Gameplay" type="Node3D" unique_id=2049038793]
 
 [node name="Character" type="Node3D" parent="." unique_id=191243375]
-script = ExtResource("1_xuee5")
 
 [node name="Player" type="CharacterBody3D" parent="Character" unique_id=856654349]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
@@ -59,29 +56,27 @@ shape = SubResource("CapsuleShape3D_ej4tk")
 
 [node name="LevelBoundary" type="Node3D" parent="." unique_id=1486264260]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -0.25, 0)
+visible = false
 
 [node name="Floor" type="MeshInstance3D" parent="LevelBoundary" unique_id=1000710395]
 mesh = SubResource("BoxMesh_oe8ih")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="LevelBoundary/Floor" unique_id=636409351]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBoundary/Floor/StaticBody3D" unique_id=1473520039]
-shape = SubResource("ConcavePolygonShape3D_ej4tk")
 
 [node name="Wall" type="MeshInstance3D" parent="LevelBoundary" unique_id=358371026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 0)
 mesh = SubResource("BoxMesh_xuee5")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="LevelBoundary/Wall" unique_id=1449578271]
+[node name="StaticBody3D" type="StaticBody3D" parent="LevelBoundary/Wall" unique_id=1621658921]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBoundary/Wall/StaticBody3D" unique_id=2027055710]
-shape = SubResource("ConcavePolygonShape3D_oe8ih")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBoundary/Wall/StaticBody3D" unique_id=1163784885]
+shape = SubResource("ConcavePolygonShape3D_xuee5")
 
 [node name="StateMachine" parent="." unique_id=807433644 instance=ExtResource("4_smepj")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2120226800]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 6, 0)
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=252010629 node_paths=PackedStringArray("target")]
-script = ExtResource("2_ej4tk")
+[node name="Camera3D" parent="." unique_id=138067227 node_paths=PackedStringArray("target") instance=ExtResource("5_smepj")]
 target = NodePath("../Character/Player")
+
+[node name="LevelBoundary2" parent="." unique_id=1757720950 instance=ExtResource("5_cbffv")]
+config = ExtResource("6_cbffv")
