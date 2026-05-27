@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CharacterModelConfig" format=3 uid="uid://ds1u3la74uomn"]
+
+[ext_resource type="Script" uid="uid://b6h11egblxk3x" path="res://resources/CharacterModelConfig.gd" id="1_pdft0"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_pdft0"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_5bpyl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_moqa0"]
+
+[resource]
+script = ExtResource("1_pdft0")
+meshes = Array[Mesh]([SubResource("CapsuleMesh_pdft0"), SubResource("PrismMesh_5bpyl")])
+shapes = Array[Shape3D]([SubResource("CapsuleShape3D_moqa0"), null])
+positions = Array[Vector3]([Vector3(0, 0, 0), Vector3(0, 0.75, -0.5)])
+rotations = Array[Vector3]([Vector3(0, 0, 0), Vector3(-90, 0, 0)])
+metadata/_custom_type_script = "uid://b6h11egblxk3x"

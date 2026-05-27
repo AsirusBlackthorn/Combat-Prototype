@@ -12,4 +12,5 @@ size = Vector3(20, 0.5, 20)
 script = ExtResource("1_b6w7o")
 meshes = Array[Mesh]([SubResource("BoxMesh_b6w7o")])
 shapes = Array[Shape3D]([SubResource("BoxShape3D_b6w7o")])
+positions = Array[Vector3]([Vector3(0, 0, 0)])
 metadata/_custom_type_script = "uid://dduex0fk3fdx1"

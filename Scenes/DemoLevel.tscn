@@ -1,15 +1,36 @@
 [gd_scene format=3 uid="uid://cvs0iph4rone7"]
 
-[ext_resource type="PackedScene" uid="uid://dolx0l4glv50d" path="res://Scenes/EnemyBase.tscn" id="1_0nhfg"]
 [ext_resource type="PackedScene" uid="uid://y6lnovhxtgbn" path="res://Scenes/LevelBoundary.tscn" id="1_3p84o"]
 [ext_resource type="Resource" uid="uid://cqysjl06atugp" path="res://DemoFloor.tres" id="3_37m1x"]
+[ext_resource type="Resource" uid="uid://d3vfjibp2ipiy" path="res://DemoWall.tres" id="3_p42v0"]
+[ext_resource type="PackedScene" uid="uid://ngi0k0x0pybt" path="res://EnemyBase.tscn" id="4_0ivf7"]
+[ext_resource type="Resource" uid="uid://ds1u3la74uomn" path="res://resources/PlaceholderCharacter.tres" id="5_x5xeu"]
 
-[node name="DemoLevel" type="Node3D" unique_id=1367429581]
+[node name="LevelBase" type="Node3D" unique_id=1367429581]
 
-[node name="EnemyBase" parent="." unique_id=1868894237 instance=ExtResource("1_0nhfg")]
+[node name="Lighting" type="Node3D" parent="." unique_id=1765841086]
 
-[node name="LevelBoundary" parent="." unique_id=1757720950 instance=ExtResource("1_3p84o")]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=1426577254]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10, 0)
+
+[node name="Boundaries" type="Node3D" parent="." unique_id=1895673345]
+
+[node name="Wall" parent="Boundaries" unique_id=1757720950 instance=ExtResource("1_3p84o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -10)
+config = ExtResource("3_p42v0")
+
+[node name="Floor" parent="Boundaries" unique_id=1119150719 instance=ExtResource("1_3p84o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 config = ExtResource("3_37m1x")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1426577254]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10, 0)
+[node name="Characters" type="Node3D" parent="." unique_id=36145146]
+
+[node name="Enemies" type="Node3D" parent="Characters" unique_id=1100771915]
+
+[node name="Enemy" parent="Characters/Enemies" unique_id=836475588 instance=ExtResource("4_0ivf7")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1, -5)
+config = ExtResource("5_x5xeu")
+
+[node name="Friends" type="Node3D" parent="Characters" unique_id=1942255769]
+
+[node name="InteractableObjects" type="Node3D" parent="." unique_id=980166925]

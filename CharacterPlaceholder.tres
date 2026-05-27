@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CharacterConfig" format=3 uid="uid://c4hueq8wg0nuy"]
+
+[ext_resource type="Script" uid="uid://daoqmgud2mlio" path="res://resources/CharacterConfig.gd" id="1_xbxg3"]
+
+[sub_resource type="PlaceholderMaterial" id="PlaceholderMaterial_xbxg3"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7uftf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xbxg3"]
+
+[sub_resource type="PlaceholderMaterial" id="PlaceholderMaterial_7uftf"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_2brfh"]
+
+[resource]
+script = ExtResource("1_xbxg3")
+body_mesh = SubResource("CapsuleMesh_7uftf")
+body_material = SubResource("PlaceholderMaterial_xbxg3")
+head_mesh = SubResource("PrismMesh_2brfh")
+head_material = SubResource("PlaceholderMaterial_7uftf")
+head_position = Vector3(0, 0.75, -0.5)
+head_rotation_degrees = Vector3(-90, 0, 0)
+collision_shape = SubResource("CapsuleShape3D_xbxg3")
+metadata/_custom_type_script = "uid://daoqmgud2mlio"

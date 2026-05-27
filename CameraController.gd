@@ -1,5 +1,16 @@
 # res://CameraController.gd
 # Edit file: res://CameraController.gd
+# Develop logic to allow camera snapping:
+#To whichever instance of EnemyBase.tscn in the viewport is closest to the player
+#If none, snap camera to the direction the player is facing
+
+#Develop logic that handles collision shapes differently depending on their definition:
+#Typical instances of LevelBoundary.tscn: keep current behaviour.
+# 'See-through' level boundaries: collide with the player, but not the camera or camera arm.
+#Other characters (instances of EnemyBase.tscn and FriendBase.tscn): extend camera arm away from player
+#If camera is caught between a typical LevelBoundary and a character, colliding character turns invisible and camera passes through
+
+
 extends Camera3D
 
 @export var target: Node3D

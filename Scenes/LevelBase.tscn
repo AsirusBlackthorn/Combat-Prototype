@@ -4,7 +4,19 @@
 
 [node name="LevelBase" type="Node3D" unique_id=1367429581]
 
-[node name="LevelBoundary" parent="." unique_id=1757720950 instance=ExtResource("1_wrhoe")]
+[node name="Lighting" type="Node3D" parent="." unique_id=1765841086]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1426577254]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=1426577254]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10, 0)
+
+[node name="Boundaries" type="Node3D" parent="." unique_id=1895673345]
+
+[node name="LevelBoundary" parent="Boundaries" unique_id=1757720950 instance=ExtResource("1_wrhoe")]
+
+[node name="Characters" type="Node3D" parent="." unique_id=36145146]
+
+[node name="Enemies" type="Node3D" parent="Characters" unique_id=1100771915]
+
+[node name="Friends" type="Node3D" parent="Characters" unique_id=1942255769]
+
+[node name="InteractableObjects" type="Node3D" parent="." unique_id=980166925]

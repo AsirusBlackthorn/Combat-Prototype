@@ -1,10 +1,13 @@
-extends "res://Character.gd"
+# res://Enemy.gd
+
+@tool
+extends Character
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
+	super()  # Calls Character._ready(), which calls apply_config()
+	# Enemy-specific setup goes here
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

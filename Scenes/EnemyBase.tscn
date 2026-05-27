@@ -1,9 +1,0 @@
-[gd_scene format=3 uid="uid://dolx0l4glv50d"]
-
-[ext_resource type="PackedScene" uid="uid://cxnhiuana2lmn" path="res://Scenes/CharacterBase.tscn" id="1_2frsa"]
-[ext_resource type="Script" uid="uid://b8pyqojh5otak" path="res://Enemy.gd" id="2_3y0ew"]
-
-[node name="EnemyBase" unique_id=1868894237 instance=ExtResource("1_2frsa")]
-
-[node name="EnemyParameters" type="Node3D" parent="." index="5" unique_id=1178537374]
-script = ExtResource("2_3y0ew")

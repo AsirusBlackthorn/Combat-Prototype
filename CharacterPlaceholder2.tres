@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CharacterModelConfig" format=3 uid="uid://bfjsh62xd2wwg"]
+
+[ext_resource type="Script" uid="uid://b6h11egblxk3x" path="res://resources/CharacterModelConfig.gd" id="1_dgitg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gmks1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yhsg5"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_dv03b"]
+material = SubResource("StandardMaterial3D_yhsg5")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yhsg5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dgitg"]
+
+[resource]
+script = ExtResource("1_dgitg")
+meshes = Array[Mesh]([SubResource("BoxMesh_gmks1"), SubResource("PrismMesh_dv03b")])
+shapes = Array[Shape3D]([SubResource("BoxShape3D_yhsg5"), SubResource("CylinderShape3D_dgitg")])
+metadata/_custom_type_script = "uid://b6h11egblxk3x"

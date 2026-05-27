@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Combat prototype"
-run/main_scene="uid://cf5ouhvu3tcvg"
+run/main_scene="uid://dlb1es4qdq7r4"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

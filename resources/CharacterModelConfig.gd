@@ -1,6 +1,6 @@
-# Edit file: res://resources/BoundaryConfig.gd (no changes needed)
-class_name BoundaryConfig
+# res://resources/CharacterConfig.gd
 extends Resource
+class_name CharacterModelConfig
 
 @export var meshes: Array[Mesh]
 @export var shapes: Array[Shape3D]

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dlb1es4qdq7r4"]
+
+[ext_resource type="PackedScene" uid="uid://cvs0iph4rone7" path="res://Scenes/DemoLevel.tscn" id="1_ihd46"]
+[ext_resource type="PackedScene" uid="uid://6nvmcga7vjex" path="res://Scenes/PlayerBase.tscn" id="2_gmks1"]
+[ext_resource type="Resource" uid="uid://c4hueq8wg0nuy" path="res://CharacterPlaceholder.tres" id="3_dv03b"]
+[ext_resource type="PackedScene" uid="uid://2ky4mvf0frvi" path="res://Scenes/Camera.tscn" id="3_yhsg5"]
+[ext_resource type="PackedScene" uid="uid://damh3ken3cwy1" path="res://Scenes/LevelBase.tscn" id="4_ihd46"]
+
+[node name="Gameplay" type="Node3D" unique_id=744233170]
+
+[node name="Camera3D" parent="." unique_id=138067227 node_paths=PackedStringArray("target") instance=ExtResource("3_yhsg5")]
+target = NodePath("")
+
+[node name="DemoLevel" parent="." unique_id=1367429581 instance=ExtResource("1_ihd46")]
+
+[node name="LevelBase" parent="." unique_id=1349897455 instance=ExtResource("4_ihd46")]
+
+[node name="Player" parent="." unique_id=1868894237 instance=ExtResource("2_gmks1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.467102, 0)
+config = ExtResource("3_dv03b")

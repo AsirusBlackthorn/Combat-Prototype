@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://nblhwjkhyr8j"]
+
+[ext_resource type="PackedScene" uid="uid://dylt8strx02hy" path="res://Scenes/StateMachine.tscn" id="1_if5gu"]
+
+[node name="CharacterBase" type="Node3D" unique_id=1274653241]
+
+[node name="StateMachine" parent="." unique_id=807433644 instance=ExtResource("1_if5gu")]

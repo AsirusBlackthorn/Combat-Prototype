@@ -1,19 +1,55 @@
-#Character.gd design specification:
+# res://Character.gd
+#Develop logic to implement resources for:
+#Stats
+#Equipment
+#Skeleton rigs (with dynamic arrays for multiple limbs, and collisionshapes associated with each bone)
+#Animations (Tree and player)
 
-#Manage logic and data that is shared by all characters in game
-#Including the application of physics processes, and StateMachine.tscn
-#Consider whether StateMachine.tscn needs to be added as a child of the CharacterBase.tscn root node?
+#Develop universal StateMachine.tscn logic
+#Develop PushState logic in CollisionStates so the player can start interacting with the enemybase instance in DemoLevel.tscn
+
+#Develop logic that handles camera collision with characters: 
+#Avoid collision by extending camera arm away from player if possible
+#If camera is caught between a non see-through LevelBoundary and a character, colliding character turns invisible and camera passes through
+
 
 extends CharacterBody3D
+class_name Character
 
-#Define as base class
+@export var speed: float = 5.0
+@export var acceleration: float = 10.0
+@export var rotation_speed: float = 10.0
+@export var jump_velocity: float = 4.5
+var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-@export var config: CharacterConfig
+func _physics_process(delta: float) -> void:
+		# Don't process physics in the editor (prevents falling in editor viewport)
+	if Engine.is_editor_hint():
+		return
+	# Apply gravity
+	if not is_on_floor():
+		velocity.y -= gravity * delta
 
-@onready var mesh_instance: MeshInstance3D = $Mesh
-@onready var collision_shape: CollisionShape3D = $Collision
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var anim_tree: AnimationTree = $AnimationTree
+	# Call movement hook (overridden by derived classes if needed)
+	_handle_movement(delta)
+
+	move_and_slide()
+
+# Virtual method – override in derived classes for custom movement
+func _handle_movement(_delta: float) -> void:
+	pass
+@export var config: CharacterModelConfig:
+	set(value):
+		if _config:
+			_config.changed.disconnect(apply_config)
+		_config = value
+		if _config:
+			_config.changed.connect(apply_config)
+		if Engine.is_editor_hint():
+			apply_config()
+	get:
+		return _config
+var _config: CharacterModelConfig
 
 func _ready():
 	apply_config()
@@ -21,24 +57,28 @@ func _ready():
 func apply_config():
 	if not config:
 		return
-	
-	# Apply mesh
-	mesh_instance.mesh = config.mesh
-	if config.material_override:
-		mesh_instance.material_override = config.material_override
-	
-	# Apply collision
-	collision_shape.shape = config.collision_shape
-	collision_layer = config.collision_layer
-	collision_mask = config.collision_mask
-	
-	# Apply animations
-	if config.animation_library:
-		anim_player.add_animation_library("", config.animation_library)
-	if config.animation_tree:
-		anim_tree.tree_root = config.animation_tree
-	
-	# Apply stats (shared with controller)
+
+	# Remove old dynamically-added children (keep original scene children like AnimationTree, StateMachine etc.)
 	for child in get_children():
-		if child.has_method("set_stats"):
-			child.set_stats(config.stats)
+		if child is MeshInstance3D or child is CollisionShape3D:
+			child.free()
+
+	var count: int = min(config.meshes.size(), config.shapes.size())
+	for i in range(count):
+		var mesh_instance := MeshInstance3D.new()
+		mesh_instance.mesh = config.meshes[i]
+		add_child(mesh_instance)
+		mesh_instance.owner = self
+		if config.positions and i < config.positions.size():
+			mesh_instance.position = config.positions[i]
+		if config.rotations and i < config.rotations.size():
+			mesh_instance.rotation_degrees = config.rotations[i]
+
+		var collision_shape := CollisionShape3D.new()
+		collision_shape.shape = config.shapes[i]
+		add_child(collision_shape)
+		collision_shape.owner = self
+		if config.positions and i < config.positions.size():
+			collision_shape.position = config.positions[i]
+		if config.rotations and i < config.rotations.size():
+			collision_shape.rotation_degrees = config.rotations[i]
