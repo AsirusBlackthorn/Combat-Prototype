@@ -4,16 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://2ky4mvf0frvi" path="res://Scenes/Camera.tscn" id="3_yhsg5"]
 [ext_resource type="PackedScene" uid="uid://6ct0x6kpwj08" path="res://PlayerBase.tscn" id="4_gmks1"]
 [ext_resource type="Resource" uid="uid://ds1u3la74uomn" path="res://resources/PlaceholderCharacter.tres" id="4_ihd46"]
-[ext_resource type="Script" uid="uid://bm225giiwbcmw" path="res://Player.gd" id="4_yhsg5"]
 
 [node name="Gameplay" type="Node3D" unique_id=744233170]
 
-[node name="Camera3D" parent="." unique_id=138067227 node_paths=PackedStringArray("target") instance=ExtResource("3_yhsg5")]
-target = NodePath("../PlayerBase")
+[node name="Camera3D" parent="." unique_id=138067227 instance=ExtResource("3_yhsg5")]
 
 [node name="DemoLevel" parent="." unique_id=1367429581 instance=ExtResource("1_ihd46")]
 
 [node name="PlayerBase" parent="." unique_id=747760851 instance=ExtResource("4_gmks1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-script = ExtResource("4_yhsg5")
 config = ExtResource("4_ihd46")

@@ -12,7 +12,7 @@
 #Avoid collision by extending camera arm away from player if possible
 #If camera is caught between a non see-through LevelBoundary and a character, colliding character turns invisible and camera passes through
 
-
+@tool
 extends CharacterBody3D
 class_name Character
 
@@ -20,20 +20,31 @@ class_name Character
 @export var acceleration: float = 10.0
 @export var rotation_speed: float = 10.0
 @export var jump_velocity: float = 4.5
+@export var max_air_actions: int = 2
+var air_actions_remaining: int = 2
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+# Direction the character wants to move in (set each frame by Player/Enemy/Friend)
+var move_direction: Vector3 = Vector3.ZERO
+
+@onready var state_machine: Node = $CharacterBase/StateMachine
 
 func _physics_process(delta: float) -> void:
-		# Don't process physics in the editor (prevents falling in editor viewport)
+	# Don't process physics in the editor (prevents falling in editor viewport)
 	if Engine.is_editor_hint():
 		return
 	# Apply gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	# Call movement hook (overridden by derived classes if needed)
-	_handle_movement(delta)
+	# Let the state machine handle movement logic
+	if state_machine:
+		state_machine.physics_update(delta)
 
+	# Always call move_and_slide() last
 	move_and_slide()
+# Called by SprintState when turning too sharply (overridden in Player.gd)
+func stop_sprint() -> void:
+	pass
 
 # Virtual method – override in derived classes for custom movement
 func _handle_movement(_delta: float) -> void:
@@ -53,6 +64,7 @@ var _config: CharacterModelConfig
 
 func _ready():
 	apply_config()
+	air_actions_remaining = max_air_actions
 
 func apply_config():
 	if not config:

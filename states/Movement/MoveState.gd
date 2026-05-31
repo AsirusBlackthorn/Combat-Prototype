@@ -1,31 +1,77 @@
 # res://states/Movement/MoveState.gd
 extends "res://states/State.gd"
+# TODO: Rotation doesn't complete after brief input.
+# Need to store last direction and keep slerping until aligned,
+# even when move_direction is zero. Current _target_basis approach
+# needs fixing (rotation stops when input ends).
+# Stores the last target direction so rotation completes even after input ends
+var _target_basis: Basis
+var _has_target: bool = false
+
+func enter() -> void:
+	# Reset target basis to current facing direction to prevent snap on state entry
+	if character:
+		_target_basis = character.basis
+		_has_target = true
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func air_update(delta: float) -> void:
+	if not character:
+		return
 
+	var direction: Vector3 = character.move_direction
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	if direction.length() > 0.1:
+		direction = direction.normalized()
+		# Moderate air control factor (50%)
+		var target_vel: Vector3 = direction * character.speed * 0.5
+		character.velocity.x = move_toward(character.velocity.x, target_vel.x, character.acceleration * 0.2 * delta)
+		character.velocity.z = move_toward(character.velocity.z, target_vel.z, character.acceleration * 0.2 * delta)
+		# Rotate toward input
+		# Flatten to horizontal plane for rotation to avoid rolling when camera is tilted
+		var flat_direction: Vector3 = Vector3(direction.x, 0.0, direction.z)
+		if flat_direction.length() > 0.0:
+			flat_direction = flat_direction.normalized()
+			_target_basis = Basis().looking_at(flat_direction, Vector3.UP)
+			_has_target = true
+		else:
+			# If flattened direction is zero (movement purely vertical), don't change target
+			pass
+	else:
+		# No input: keep momentum with light drag
+		character.velocity.x = move_toward(character.velocity.x, 0.0, character.acceleration * 0.05 * delta)
+		character.velocity.z = move_toward(character.velocity.z, 0.0, character.acceleration * 0.05 * delta)
 
-#Movestate design specification:
+	# Always rotate toward the last target direction (if we have one)
+	if _has_target:
+		character.basis = character.basis.slerp(_target_basis, character.rotation_speed * delta)
 
-#Supersede omnidirectional movement controls currently found in player.gd
-#Export character movement speed vector for use by other related scripts
-#I assume that the movement of the player in this state should always be driven by a movement speed variable
-#Therefore any animations associated with this state or its siblings would be static
+func physics_update(delta: float) -> void:
+	if not character:
+		return
 
-#Consider whether it is preferable to assign two different animation:
-#Slow walking (light thumbstick input, eg up to 60%),
-#And jog/ light run (eg. 60-100% thumbstick input)
+	var direction: Vector3 = character.move_direction
 
-#Or, would it be preferable to assign two children to movestate, so all three states are assigned their own animation:
-#Walking animation - Movestate
-#Jogging/ light running animation: RunState
-#Sprinting animation: SprintState
+	if direction.length() > 0.1:
+		direction = direction.normalized()
+		# Update the target rotation to face movement direction
+		# Flatten to horizontal plane for rotation to avoid rolling when camera is tilted
+		var flat_direction := Vector3(direction.x, 0.0, direction.z)
+		if flat_direction.length() > 0.0:
+			flat_direction = flat_direction.normalized()
+			_target_basis = Basis().looking_at(flat_direction, Vector3.UP)
+			_has_target = true
+		else:
+			# If flattened direction is zero, keep current target (no change)
+			pass
+		# Apply horizontal movement (ground speed)
+		character.velocity.x = direction.x * character.speed
+		character.velocity.z = direction.z * character.speed
+	else:
+		# Decelerate to a stop when no movement input/direction is present
+		character.velocity.x = move_toward(character.velocity.x, 0.0, character.acceleration * delta)
+		character.velocity.z = move_toward(character.velocity.z, 0.0, character.acceleration * delta)
 
-#Bear in mind that sprinting will require holding the ui_cancel button (timing based).
-#This will require modified camera behaviour - as the player's right thumb will be occupied, the camera should gently drift behind the player to correspond with left and right movement inputs.
+	# Always rotate toward the last target direction (if we have one)
+	if _has_target:
+		character.basis = character.basis.slerp(_target_basis, character.rotation_speed * delta)

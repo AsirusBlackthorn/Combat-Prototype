@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://da6j12q0vjewh" path="res://states/Movement/SprintState.gd" id="5_2s0qg"]
 [ext_resource type="Script" uid="uid://dbt2pn1pj8soa" path="res://states/Movement/DodgeState.gd" id="6_mbx1x"]
 [ext_resource type="Script" uid="uid://dbdywdjgcuk1" path="res://states/Movement/JumpState.gd" id="7_jpbrv"]
+[ext_resource type="Script" uid="uid://cfrahd20p4d5g" path="res://Scenes/ContactStates.gd" id="8_sh0rg"]
+[ext_resource type="Script" uid="uid://lxcqpdhha1y0" path="res://Scenes/PushState.gd" id="9_dsebq"]
 
 [node name="StateMachine" type="Node" unique_id=807433644]
 script = ExtResource("1_mwdj8")
@@ -27,13 +29,16 @@ script = ExtResource("5_2s0qg")
 
 [node name="DodgeState" type="Node" parent="MovementStates" unique_id=1875116381]
 script = ExtResource("6_mbx1x")
+buffer_window = 0.35
 
 [node name="JumpState" type="Node" parent="MovementStates" unique_id=8700123]
 script = ExtResource("7_jpbrv")
 
 [node name="ContactStates" type="Node" parent="." unique_id=296657321]
+script = ExtResource("8_sh0rg")
 
 [node name="PushState" type="Node" parent="ContactStates" unique_id=1641422310]
+script = ExtResource("9_dsebq")
 
 [node name="ReactionState" type="Node" parent="ContactStates" unique_id=1033397303]
 

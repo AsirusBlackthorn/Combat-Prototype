@@ -1,40 +1,58 @@
 # res://states/Movement/JumpState.gd
+# JumpState: applies vertical + lateral impulse on enter, then immediately
+# transitions to the appropriate airborne state (MoveState or IdleState).
 extends "res://states/State.gd"
 
+# JumpState is a burst state: it applies the jump impulse on enter and
+# then immediately exits. Air control and landing detection are handled
+# by the MovementStateMachine.
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func enter() -> void:
+	if not character:
+		return
 
+	var on_floor: bool = character.is_on_floor()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	# --- Determine if this is a double-jump ---
+	if not on_floor:
+		# Double-jump: consume an air action if available
+		if not can_perform_air_action():
+			# No air actions left – exit to the appropriate air state without applying impulse
+			_exit_to_air_state()
+			return
+		consume_air_action()
 
-#JumpState design specification:
+	# --- Apply vertical impulse ---
+	character.velocity.y = character.jump_velocity
 
-#Will supersede jumping logic currently found in Player.gd
-#Consider dividing specified logic with an 'InAirState'
+	# --- Apply lateral impulse if movement input exists ---
+	var direction: Vector3 = character.move_direction
+	if direction.length() > 0.1:
+		direction = direction.normalized()
+		var horizontal_speed: float = character.speed * 0.7
+		character.velocity.x = direction.x * horizontal_speed
+		character.velocity.z = direction.z * horizontal_speed
+		# Flatten to horizontal plane for rotation
+		var flat_direction := Vector3(direction.x, 0.0, direction.z).normalized()
+		# Rotate character to face jump direction (snap)
+		var target_basis := Basis().looking_at(flat_direction, Vector3.UP)
+	else:
+		# No input: preserve existing horizontal velocity (momentum)
+		pass
 
-#Can transition from IdleState, MoveState and its children
+	# --- Immediately transition to the appropriate air state ---
+	_exit_to_air_state()
 
-#Read exported movement speed vector and preserve momentum
-#Omnidirectional movement logic will be preserved during air control, however stricly limited:
-#eg rotation and translation speed limited to 10-25%
-#Include 'coyote time' in design scope
+func _exit_to_air_state() -> void:
+	if not character:
+		return
 
+	var movement_sm = character.state_machine.get_node_or_null("MovementStates")
+	if not movement_sm:
+		return
 
-#During ChargeState1-4 and while InAir is true, the player can perform two of the three following manouvres:
-#Double jump, Air-dash and special attack
-#Two manouvres csn be performed, but each must be different - hence, the player cannot 'triple jump' or air dash twice.
-#The player will have access to multiple special attacks, but again only two can be performed and each must be different.
-#Normal attacks (PrimaryAction and SecondaryAction) will interrupt the application of gravity on Characters
-#This applies both when the character hits or is hit by a target - this behaviour should therefore apply both to the player and enemies.
-
-#Can cancel the startup frames of ActionStates
-#Can cancel the recovery frames of ActionStates, ContactStates, DodgeState and SprintState
-
-#During ChargeState1-4:
-#Jumping animations will be modified, create area-of-effect hitboxes, possibly affect i-frames - perhaps more
-#Can cancel active frames of DodgeState, PrimaryState and SecondaryState (if equipment allows)
-#Can be cancelled during startup by PrimaryState and SecondaryState (if equipment allows) - results in a launching attack
+	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	if input_dir.length() > 0.1:
+		movement_sm.transition_to("MoveState")
+	else:
+		movement_sm.transition_to("IdleState")

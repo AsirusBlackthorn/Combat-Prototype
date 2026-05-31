@@ -16,14 +16,13 @@ func _ready() -> void:
 		var first_key = states.keys()[0]
 		transition_to(first_key)
 
-func _process(delta: float) -> void:
+func update(delta: float) -> void:
 	if current_state and current_state.has_method("update"):
 		current_state.update(delta)
 
-func _physics_process(delta: float) -> void:
+func physics_update(delta: float) -> void:
 	if current_state and current_state.has_method("physics_update"):
 		current_state.physics_update(delta)
-
 # Recursively find all State nodes and register them.
 func _register_states(node: Node) -> void:
 	for child in node.get_children():

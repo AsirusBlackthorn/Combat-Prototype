@@ -36,7 +36,8 @@ func _ready():
 		if not target:
 			target = get_node_or_null("../../Character/Player")
 	# Start behind the player at a slight downward angle
-	pitch = deg_to_rad(-15.0)
+	pitch = deg_to_rad(-30.0)
+	#Can starting pitch be exported to the inspector?
 	yaw = 0.0
 	# Apply initial position so the camera doesn't start at origin
 	if target:
@@ -98,5 +99,6 @@ func _update_camera():
 	# Apply the smoothed distance
 	var offset = rotation_basis * Vector3.BACK * _current_distance
 	global_position = target.global_position + offset
-
+	#Can camera height be exported to the inspector?
+	
 	look_at(target.global_position, Vector3.UP)
